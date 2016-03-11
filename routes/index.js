@@ -31,6 +31,9 @@ passport.use(new LocalStrategy({usernameField: 'email', passwordField: 'password
     models.User.findOne({
 	where: { email: username }
     }).then(function(user) {
+	if(!user) {
+            return done(null, false, {message: 'Mail incorrect.' });
+        }
 	user.comparePassword(password, function (err, result) {
 	    if (err || (result != true)) return done(null, false, err);
 	    return done(null, user);

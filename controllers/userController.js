@@ -4,7 +4,6 @@ var passport = require('passport');
 exports.findAll = function(req, res) {
     models.User.findAll()
 	.then(function(users) {
-	    console.log(users);
 	    res.render('index', {title: 'express', user: users});
 	}).catch(function(err){
 	    res.send(err);
@@ -25,7 +24,6 @@ exports.create = function(req, res) {
 			return res.redirect('/users');
 		    });
 		}).catch(function(err){
-		    console.log(err);
 		    res.send(err);
 		});
 	} else {
