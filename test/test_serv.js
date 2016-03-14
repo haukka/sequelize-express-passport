@@ -25,6 +25,20 @@ describe('Test the registration part', function() {
 	    .post('/user')
 	    .set('Accept','application/json')
 	    .send({"email": "totoro@toto.com", "password": "totoro"})
+	    .expect(302, done);
+    });
+
+    it('respond to /user', function test(done) {
+	request(server)
+	    .get('/user/1')
+	    .expect(200, done);
+    });
+
+    it('respond to /user', function test(done) {
+	request(server)
+	    .put('/user/1')
+	    .set('Accept','application/json')
+	    .send({"username": "toto"})
 	    .expect(200, done);
     });
 });

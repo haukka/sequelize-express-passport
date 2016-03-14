@@ -31,14 +31,14 @@ passport.use(new LocalStrategy({usernameField: 'email', passwordField: 'password
     models.User.findOne({
 	where: { email: username }
     }).then(function(user) {
-	if(!user) {
-            return done(null, false, {message: 'Mail incorrect.' });
+	if (!user) {
+            return done(null, false, { message: 'Cet utilisateur n\'existe pas'});
         }
 	user.comparePassword(password, function (err, result) {
-	    if (err || (result != true)) return done(null, false, err);
+	    if (err || (result != true)) return done(null, false, { message: 'Le mot de passe est invalide'} );
 	    return done(null, user);
 	});
-    }).catch(function(err){
+    }).catch(function(err) {
 	return done(err);
     });
 }));
@@ -65,13 +65,14 @@ router.get('/register', function(req, res) {
     res.render('register', {});
 });
 
+router.post('/login', passport.authenticate('local', {
+    successRedirect: '/users',
+    failureRedirect: '/login',
+    failureFlash: true
+}));
 
 router.get('/login', function(req, res) {
-    res.render('login', { user : req.user });
-});
-
-router.post('/login', passport.authenticate('local'),function(req, res) {
-    res.redirect('/users');
+    res.render('login', { user : req.user , message: req.flash('error')});
 });
 
 router.get('/auth/facebook', passport.authenticate('facebook'));

@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var routes = require('./routes/index');
+var flash = require('connect-flash');
 var userRoutes = require('./routes/users');
 
 var app = express();
@@ -15,13 +16,14 @@ app.engine('ejs', require('ejs-locals'));
 app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(require('express-session')({
     secret: 'This is a secret',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
 }));
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));

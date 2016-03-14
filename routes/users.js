@@ -12,7 +12,7 @@ function ensureAuthenticated(req, res, next) {
 router.get('/users', ensureAuthenticated, controller.findAll);
 router.post('/user', controller.create);
 router.get('/user/:id', ensureAuthenticated, controller.findOne);
-router.put('/user/:id', ensureAuthenticated, controller.Update);
+router.put('/user/:id', ensureAuthenticated,  controller.Update);
 router.delete('/user/:id', ensureAuthenticated, controller.Delete);
 
 module.exports = router;

@@ -4,6 +4,7 @@ var passport = require('passport');
 exports.findAll = function(req, res) {
     models.User.findAll()
 	.then(function(users) {
+	    console.log(users);
 	    res.render('index', {title: 'express', user: users});
 	}).catch(function(err){
 	    res.send(err);
@@ -36,21 +37,28 @@ exports.create = function(req, res) {
 
 exports.findOne = function(req, res) {
     models.User.findOne(
-	{where: {id: req.params.userId}}).then(function(user) {
+	{where: {id: req.params.id}}).then(function(user) {
+	    console.log(user);
 	    res.render('index', {user: user});
 	}).catch(function(err){
 	    res.send(err);
 	});
 }
 
-exports.Update = function(req, res ) {
-    
+exports.Update = function(req, res) {
+    console.log(req.body);
+    models.User.update({username: req.body.username},{
+	where: {id: req.params.id}}).then(function(user){
+	    res.send({message: 'ca marche'});
+	}).catch(function(err){
+	    res.send({message: 'error'});
+	});
 }
 
 exports.Delete = function(req, res ) {
     models.User.destroy({
 	where: {
-	    id: req.params.userId
+	    id: req.params.id
 	}
     }).then(function() {
 	res.redirect('/');
