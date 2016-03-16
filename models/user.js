@@ -35,7 +35,9 @@ module.exports = function(sequelize, DataTypes) {
       lastName: DataTypes.STRING,
       email: DataTypes.STRING,
       facebookId: DataTypes.TEXT,
-      fbtoken: DataTypes.TEXT
+      fbtoken: DataTypes.TEXT,
+      resetPasswordToken: DataTypes.STRING,
+      resetPasswordExpires: DataTypes.DATE
   }, {
       //crypt the password with bcrypt
       instanceMethods: {
